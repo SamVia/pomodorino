@@ -64,7 +64,7 @@ else:
         
         #plays sound to start working
         #winsound.PlaySound(work_sound, winsound.SND_FILENAME)
-        
+        st.audio(work_sound, "audio/wav", start_time=0)
         #count down timer
         seconds = st.session_state.inputs[0] * 60
         for s in range(seconds, 0, -1):
