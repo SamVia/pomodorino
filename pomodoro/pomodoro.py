@@ -91,7 +91,7 @@ else:
     #finished work screen
     page_bg_img = f"""<style>[data-testid="stAppViewContainer"] > .main {{background-image: url({link_finish});background-size: 100% auto;background-position: center center;background-repeat: no-repeat;background-attachment: local;margin-top:-165px;}}[data-testid="stHeader"] {{background: rgba(0,0,0,0);}}</style>"""
     st.markdown(page_bg_img, unsafe_allow_html=True)
-    time.sleep(1)
+    time.sleep(3)
     #play sound of finished working
     #winsound.PlaySound(finish_sound, winsound.SND_FILENAME)
     st.session_state.submitted = False
