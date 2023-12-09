@@ -16,7 +16,7 @@ hide_st_style = """
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
 #sounds
-work_sound = r"pomodorino\sounds\work.wav"
+work_sound = open(r"pomodorino\sounds\work.wav", "rb").read()
 pause_sound = r"pomodorino\sounds\pause.wav"
 finish_sound = r"pomodorino\sounds\finishs.wav"
 
@@ -59,7 +59,7 @@ else:
     print_container = st.empty()
     for i in range(0,st.session_state.inputs[2]):
         
-        page_bg_img = f"""<style>[data-testid="stAppViewContainer"] > .main {{background-image: url({link_work});background-size: 100% auto;background-position: center center;background-repeat: no-repeat;background-attachment: local;margin-top:{str(-165+i*pixel_adj)}px;}}[data-testid="stHeader"] {{background: rgba(0,0,0,0);}}</style>"""
+        page_bg_img = f"""<style>[data-testid="stAppViewContainer"] > .main {{background-image: url({link_work}); background-attachment: fixed; background-size: cover;}}[data-testid="stHeader"] {{background: rgba(0,0,0,0);}}</style>"""
         st.markdown(page_bg_img, unsafe_allow_html=True)
         
         #plays sound to start working
