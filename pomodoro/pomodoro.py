@@ -1,7 +1,7 @@
 import streamlit as st
 from datetime import timedelta
 import time
-import winsound
+#import winsound
 
 pixel_adj = 6
 
@@ -63,7 +63,7 @@ else:
         st.markdown(page_bg_img, unsafe_allow_html=True)
         
         #plays sound to start working
-        winsound.PlaySound(work_sound, winsound.SND_FILENAME)
+        #winsound.PlaySound(work_sound, winsound.SND_FILENAME)
         
         #count down timer
         seconds = st.session_state.inputs[0] * 60
@@ -78,7 +78,7 @@ else:
         st.markdown(page_bg_img, unsafe_allow_html=True)
         
         #plays sound to start the pause
-        winsound.PlaySound(pause_sound, winsound.SND_FILENAME)
+        #winsound.PlaySound(pause_sound, winsound.SND_FILENAME)
         
         #count down timer
         seconds = st.session_state.inputs[1] * 60
@@ -93,6 +93,6 @@ else:
     st.markdown(page_bg_img, unsafe_allow_html=True)
     time.sleep(1)
     #play sound of finished working
-    winsound.PlaySound(finish_sound, winsound.SND_FILENAME)
+    #winsound.PlaySound(finish_sound, winsound.SND_FILENAME)
     st.session_state.submitted = False
     st.rerun()
