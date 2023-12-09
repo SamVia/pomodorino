@@ -16,7 +16,7 @@ hide_st_style = """
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
 #sounds
-work_sound = open(r"pomodorino\sounds\work.wav", "rb").read()
+work_sound = r"sounds\work.wav"
 pause_sound = r"pomodorino\sounds\pause.wav"
 finish_sound = r"pomodorino\sounds\finishs.wav"
 
