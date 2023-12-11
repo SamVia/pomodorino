@@ -2,7 +2,7 @@ import streamlit as st
 from datetime import timedelta
 import time
 import base64
-
+import os
 pixel_adj = 6
 
 #code to hide streamlit normal view
@@ -79,7 +79,7 @@ else:
 <style>
 [data-testid="stAppViewContainer"] > .main {{
 background-image: url({link_work});
-background-size: 100% auto;
+background-size: cover;
 background-position: center center;
 background-repeat: no-repeat;
 background-attachment: local;
@@ -92,11 +92,17 @@ background: rgba(0,0,0,0);
 """
 
 
-        st.markdown(f"<style>{page_bg_img}</style>", unsafe_allow_html=True)
+        st.markdown(page_bg_img, unsafe_allow_html=True)
         
         #plays sound to start working
         #winsound.PlaySound(work_sound, winsound.SND_FILENAME)
-        autoplay_audio(work_sound)
+        #autoplay_audio(work_sound)
+        html_string = """
+            <audio autoplay>
+              <source src="https://www.orangefreesounds.com/wp-content/uploads/2022/04/Small-bell-ringing-short-sound-effect.mp3" type="audio/mp3">
+            </audio>
+            """
+        st.markdown(html_string, unsafe_allow_html=True)
         #count down timer
         seconds = st.session_state.inputs[0] * 60
         for s in range(seconds, 0, -1):
