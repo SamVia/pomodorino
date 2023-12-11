@@ -1,7 +1,7 @@
 import streamlit as st
 from datetime import timedelta
 import time
-import winsound
+import base64
 
 pixel_adj = 6
 
@@ -16,7 +16,7 @@ hide_st_style = """
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
 #sounds
-work_sound = r"pomodorino\pomodoro\work.wav"
+work_sound = r"work.wav"
 pause_sound = r"pomodorino\sounds\pause.wav"
 finish_sound = r"pomodorino\sounds\finishs.wav"
 
@@ -37,6 +37,22 @@ if "submitted" not in st.session_state:
 
 # Create an empty container for the input fields
 input_container = st.empty()
+
+
+def autoplay_audio(file_path: str):
+    with open(file_path, "rb") as f:
+        data = f.read()
+        b64 = base64.b64encode(data).decode()
+        md = f"""
+            <audio autoplay="true">
+            <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
+            </audio>
+            """
+        st.markdown(
+            md,
+            unsafe_allow_html=True,
+        )
+
 
 if not st.session_state.submitted:
     page_bg_img = f""" <style> [data-testid="stAppViewContainer"] > .main {{ background-image: url({link_start}); background-size: cover; background-position: center center; background-repeat: no-repeat; background-attachment: local; margin-top:-0; }} [data-testid="stHeader"] {{ background: rgba(0,0,0,0); }} </style> """
@@ -79,8 +95,8 @@ background: rgba(0,0,0,0);
         st.markdown(f"<style>{page_bg_img}</style>", unsafe_allow_html=True)
         
         #plays sound to start working
-        winsound.PlaySound(work_sound, winsound.SND_FILENAME)
-        
+        #winsound.PlaySound(work_sound, winsound.SND_FILENAME)
+        autoplay_audio(work_sound)
         #count down timer
         seconds = st.session_state.inputs[0] * 60
         for s in range(seconds, 0, -1):
@@ -117,7 +133,7 @@ background: rgba(0,0,0,0);
         st.markdown(page_bg_img, unsafe_allow_html=True)
         
         #plays sound to start the pause
-        winsound.PlaySound(pause_sound, winsound.SND_FILENAME)
+        #winsound.PlaySound(pause_sound, winsound.SND_FILENAME)
         
         #count down timer
         seconds = st.session_state.inputs[1] * 60
@@ -155,7 +171,7 @@ background: rgba(0,0,0,0);
     time.sleep(3)
     st.balloons()
     #play sound of finished working
-    winsound.PlaySound(finish_sound, winsound.SND_FILENAME)
+    #winsound.PlaySound(finish_sound, winsound.SND_FILENAME)
     st.balloons()
 
     st.session_state.submitted = False
