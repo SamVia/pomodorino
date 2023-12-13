@@ -123,14 +123,4 @@ with col1:
 st.session_state.selected_video = (key,st.session_state.videos[key])
 
 
-md = """
-            <iframe style="display:none;" width="560" height="315" src="https://www.youtube.com/embed/nHHmA2M0i_E?autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
-
-            """
-st.markdown(
-            md,
-            unsafe_allow_html=True,
-        )
-    
   
