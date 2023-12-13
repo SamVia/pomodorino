@@ -37,6 +37,8 @@ if "inputs" not in st.session_state:
 if "submitted" not in st.session_state:
     st.session_state.submitted = False
 
+if "selected_video" not in st.session_state:
+    st.session_state.selected_video = ("None","")
 # Create an empty container for the input fields
 input_container = st.empty()
 
