@@ -5,6 +5,10 @@ import base64
 import os
 pixel_adj = 6
 
+st.set_page_config(
+  page_title="Pomodoro",
+  page_icon="🍅"
+)
 #code to hide streamlit normal view
 hide_st_style = """
     <style>
@@ -16,9 +20,7 @@ hide_st_style = """
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
 #sounds
-work_sound = r"pomodoro\work.wav"
-pause_sound = r"pomodorino\sounds\pause.wav"
-finish_sound = r"pomodorino\sounds\finishs.wav"
+
 
 #links
 link_start="https://www.htmlcsscolor.com/preview/gallery/F4CE5B.png"
@@ -39,20 +41,35 @@ if "submitted" not in st.session_state:
 input_container = st.empty()
 
 
-def autoplay_audio(file_path: str):
-    with open(file_path, "rb") as f:
-        data = f.read()
-        b64 = base64.b64encode(data).decode()
-        md = f"""
-            <audio autoplay="true">
-            <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
+def play_sound(link):
+    html_string = f"""
+            <audio autoplay>
+              <source src="{link}" type="audio/mp3">
             </audio>
             """
-        st.markdown(
-            md,
-            unsafe_allow_html=True,
-        )
+    st.markdown(html_string, unsafe_allow_html=True)
 
+def set_bg(link):
+    command = f"""
+            <style>
+            [data-testid="stAppViewContainer"] > .main {{
+            background-image: url({link});
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: local;
+            }}
+            [data-testid="stHeader"] {{
+            background: rgba(0,0,0,0);
+            }}
+            </style>
+            """
+    return command
+
+def music_player(id):
+    return f"""<iframe style="display:none;" width="560" height="315" src="https://www.youtube.com/embed/{id}?autoplay=1&loop=1&playlist={id}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>"""
+
+st.markdown(music_player(st.session_state.selected_video[1]), unsafe_allow_html=True)
 
 if not st.session_state.submitted:
     page_bg_img = f""" <style> [data-testid="stAppViewContainer"] > .main {{ background-image: url({link_start}); background-size: cover; background-position: center center; background-repeat: no-repeat; background-attachment: local; margin-top:-0; }} [data-testid="stHeader"] {{ background: rgba(0,0,0,0); }} </style> """
@@ -65,7 +82,7 @@ if not st.session_state.submitted:
     with col3: st.session_state.inputs[2] = st.number_input(f'Input {2+1}', value=st.session_state.inputs[2], min_value=1,key=f'Input {2+1}')
     
     # Create a button to submit the inputs
-    if st.button('Submit Inputs', key='Submit Button'):
+    if st.button('Start!', key='Submit Button'):
         st.session_state.submitted = True
         input_container.empty()  # Empty the container
         time.sleep(0.2)
@@ -75,34 +92,12 @@ else:
     print_container = st.empty()
     for i in range(0,st.session_state.inputs[2]):
         
-        page_bg_img = f"""
-<style>
-[data-testid="stAppViewContainer"] > .main {{
-background-image: url({link_work});
-background-size: cover;
-background-position: center center;
-background-repeat: no-repeat;
-background-attachment: local;
-
-}}
-[data-testid="stHeader"] {{
-background: rgba(0,0,0,0);
-}}
-</style>
-"""
 
 
-        st.markdown(page_bg_img, unsafe_allow_html=True)
+        st.markdown(set_bg(link_work), unsafe_allow_html=True)
+        time.sleep(0.5)
+        play_sound("https://www.orangefreesounds.com/wp-content/uploads/2022/04/Small-bell-ringing-short-sound-effect.mp3")
         
-        #plays sound to start working
-        #winsound.PlaySound(work_sound, winsound.SND_FILENAME)
-        #autoplay_audio(work_sound)
-        html_string = """
-            <audio autoplay>
-              <source src="https://www.orangefreesounds.com/wp-content/uploads/2022/04/Small-bell-ringing-short-sound-effect.mp3" type="audio/mp3">
-            </audio>
-            """
-        st.markdown(html_string, unsafe_allow_html=True)
         #count down timer
         seconds = st.session_state.inputs[0] * 60
         for s in range(seconds, 0, -1):
@@ -138,10 +133,7 @@ background: rgba(0,0,0,0);
        
         st.markdown(page_bg_img, unsafe_allow_html=True)
         
-        #plays sound to start the pause
-        #winsound.PlaySound(pause_sound, winsound.SND_FILENAME)
         
-        #count down timer
         seconds = st.session_state.inputs[1] * 60
         for s in range(seconds, 0, -1):
             print_m = f"""
