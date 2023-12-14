@@ -8,7 +8,8 @@ st.set_page_config(
 def button_logo(site, logo, circle):
     if circle: circle = "border-radius:50%;"
     else: circle = ""
-    return f"""<style>
+    return f"""
+<style>
     .myButton {{
         background-color: transparent;
         color: white;
@@ -20,7 +21,6 @@ def button_logo(site, logo, circle):
         margin: 0px;
         cursor: pointer;
         border: none;
-        
         border-radius: 50%;
         transition: transform .2s;
         outline: none;
@@ -31,14 +31,14 @@ def button_logo(site, logo, circle):
     .myButton:hover {{
         transform: scale(1.1);
     }}
-    </style>
+</style>
 
-    <a href="{site}" target="_blank">
-        <button class="myButton">
-            <img src="{logo}" alt="Image description" style="width:50px;height:50px;{circle}">
-        </button>
-    </a>
-    """
+<a href="{site}" class="myButton" target="_blank">
+    <button class="myButton">
+        <img src="{logo}" alt="Image description" style="width:50px;height:50px;{circle}">
+    </button>
+</a>
+"""
 
 st.title("Credits")
 
