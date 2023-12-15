@@ -47,15 +47,58 @@ with col1:
     st.markdown("""
                 <div class="image-container">
     <img src="https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg" alt="Description of the image" 
-    style="max-width: 100%; 
+    style="
     height: auto; 
+    width: 400px;
     border-radius: 5px;
     padding:20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);">
+    position:relative;
+    left:-160px;
+    box-shadow: 0 0 10px rgba(100, 100, 100, 0.1);">
 </div>
                 
                 
             """,unsafe_allow_html=True)
+    st.markdown("""<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .myDiv {
+            width: 400px; /* Width of the div */
+            height: auto; /* Height of the div */
+            padding: 20px; /* Inner space of the div */
+            margin: 10px; /* Outer space of the div */
+            background-color: transparent; /* Background color of the div */
+            border: transparent; /* Border around the div */
+            font-size: 16px; /* Text size in the div */
+            color: #f0f0f0; /* Text color in the div */
+            text-align: justify; /* Text alignment in the div */
+            position:relative;
+            left:-170px;
+        }
+        .myDiv img {
+            display: inline-block;
+            width: auto;
+            height: 40px;
+            position: relative;
+            top:5px;
+        }
+    </style>
+</head>
+<body>
+<div class="myDiv">
+    Tools used:
+    <br>
+    <img src="https://global.discourse-cdn.com/business7/uploads/streamlit/original/2X/f/f0d0d26db1f2d99da8472951c60e5a1b782eb6fe.png" alt="">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/935px-Python-logo-notext.svg.png" alt="" style="position:relative; top:7px; left: 5px;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/CSS3_and_HTML5_logos_and_wordmarks.svg/1280px-CSS3_and_HTML5_logos_and_wordmarks.svg.png" alt="" style="position:relative; right:-10px;">
+</div>
+</body>
+</html>
+       """
+                
+                
+                , unsafe_allow_html=True)
 
 
 with col3:
