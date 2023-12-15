@@ -50,7 +50,15 @@ def get_index(val):
 def get_image_data_url(img_bytes):
     encoded = base64.b64encode(img_bytes).decode()
     return f"data:image/png;base64,{encoded}"
-#save timezone value:
+
+def extract_youtube_id(url):
+    start = url.find("?v=") + 3
+    end = url.find("&", start)
+    if end == -1:
+        end = len(url)
+    return url[start:end]
+
+
 
 st.session_state.color = st.color_picker("select a color", st.session_state.color)
 
@@ -108,7 +116,8 @@ if "videos" not in st.session_state:
         "Classical Music":"jgpJVI3tDbY",
         "Upbeat Study":"xcwA5h85AvA",
         "Soft Techno":"7j0yL8A-k4E",
-        "8D Binaural":"n0SpKMnkPec"  
+        "8D Binaural":"n0SpKMnkPec",
+        "Input youtube link":"" 
     }
     
 list_keys = list(st.session_state.videos.keys())#easy way to get all names of choices
@@ -119,6 +128,16 @@ with col1:
                             Beats🎶
                         </div>""",unsafe_allow_html=True)
     key = st.selectbox("select ambient music", list_keys, index = list_keys.index(sel_obj), label_visibility="collapsed")
+    
+    if key == "Input youtube link":
+      text = st.text_input("input link:", placeholder="https://www.youtube.com/watch?v=jNQXAC9IVRw")
+      text = extract_youtube_id(text)
+      if len(text) != 11:
+        st.toast("Please input a valid youtube link")
+      else:
+        st.session_state.videos[key]=text
+        st.toast("Youtube link accepted!")
+
 
 st.session_state.selected_video = (key,st.session_state.videos[key])
 
