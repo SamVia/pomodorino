@@ -25,12 +25,15 @@ if "sounds" not in st.session_state:
         "Simple Notification":"https://orangefreesounds.com/wp-content/uploads/2022/06/Simple-notification-sound.mp3?_=1",
         "Flute":"https://www.orangefreesounds.com/wp-content/uploads/2022/04/Flute-notification-ringtone.mp3?_=1",
         "Chime":"https://www.orangefreesounds.com/wp-content/uploads/2021/11/Simple-sms-tone.mp3?_=1",
+        "Boxe": "https://www.myinstants.com/media/sounds/boxing-bell-184.mp3",
+        "Old Clock": "https://www.myinstants.com/media/sounds/grandfather-clock-chime.mp3",
+        "You Did IT!": "https://www.myinstants.com/media/sounds/wonka_youdidit.mp3"
     }
 if "sel_sounds" not in st.session_state:
   st.session_state.sel_sounds={
-    "work_s": 1,
-    "pause_s": 1,
-    "end_s":1
+    "work_s": "https://www.myinstants.com/media/sounds/boxing-bell-184.mp3",
+    "pause_s": "https://www.myinstants.com/media/sounds/grandfather-clock-chime.mp3",
+    "end_s": "https://www.myinstants.com/media/sounds/wonka_youdidit.mp3"
   }
 
 if "min_work" not in st.session_state:
@@ -65,11 +68,15 @@ st.session_state.color = st.color_picker("select a color", st.session_state.colo
 st.session_state.min_work = st.number_input("select minutes of work", min_value=1, value = st.session_state.min_work)
 st.session_state.min_pause = st.number_input("select minutes of pause", min_value=1, value = st.session_state.min_pause)
 
+#list of all values and all keys, look up if need to change to just two lists
+list_keys = list(st.session_state.sounds.keys())
+list_dvals = list(st.session_state.sounds.values())
+
+list_vals = list(st.session_state.sel_sounds.values())
 
 col1, col2, col3 = st.columns(3)
-
 with col1:
-  key = st.selectbox("select", list(st.session_state.sounds.keys()), key="work")
+  key = st.selectbox("select", list_keys, key="work", index=list_dvals.index(list_vals[0]))
   st.session_state.sel_sounds["work_s"] = st.session_state.sounds[key]
   if st.button("test"):
     html_string = f"""
@@ -80,7 +87,7 @@ with col1:
     st.markdown(html_string, unsafe_allow_html=True)
 
 with col2:
-  key = st.selectbox("select", list(st.session_state.sounds.keys()),key="pause")
+  key = st.selectbox("select", list_keys,key="pause", index=list_dvals.index(list_vals[1]))
   st.session_state.sel_sounds["pause_s"] = st.session_state.sounds[key]
   if st.button("test",key=4):
     html_string = f"""
@@ -92,7 +99,7 @@ with col2:
 
 
 with col3:
-  key = st.selectbox("select", list(st.session_state.sounds.keys()),key= "finish")
+  key = st.selectbox("select", list_keys, key= "finish", index=list_dvals.index(list_vals[2]))
   st.session_state.sel_sounds["end_s"] = st.session_state.sounds[key]
   if st.button("test",key=1):
     html_string = f"""

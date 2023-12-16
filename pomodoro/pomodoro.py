@@ -39,8 +39,19 @@ if "submitted" not in st.session_state:
 
 if "selected_video" not in st.session_state:
     st.session_state.selected_video = ("None","")
+    
+if "sel_sounds" not in st.session_state:
+  st.session_state.sel_sounds={
+    "work_s": "https://www.myinstants.com/media/sounds/boxing-bell-184.mp3",
+    "pause_s": "https://www.myinstants.com/media/sounds/grandfather-clock-chime.mp3",
+    "end_s": "https://www.myinstants.com/media/sounds/wonka_youdidit.mp3"
+  }    
+    
+
+    
 # Create an empty container for the input fields
 input_container = st.empty()
+
 
 
 def play_sound(link):
@@ -93,15 +104,11 @@ if not st.session_state.submitted:
 else:
     print_container = st.empty()
     for i in range(0,st.session_state.inputs[2]):
-        
-
-
-        st.markdown(set_bg(link_work), unsafe_allow_html=True)
-        time.sleep(0.5)
-        play_sound("https://www.orangefreesounds.com/wp-content/uploads/2022/04/Small-bell-ringing-short-sound-effect.mp3")
+        st.markdown(set_bg(link_work), unsafe_allow_html=True)  
+        play_sound(st.session_state.sel_sounds["work_s"])
         
         #count down timer
-        seconds = st.session_state.inputs[0] * 60
+        seconds = st.session_state.inputs[0] * 10
         for s in range(seconds, 0, -1):
             
             print_m = f"""
@@ -116,27 +123,26 @@ else:
             time.sleep(1)
         
         print_container.empty()
-        
-        page_bg_img = f"""
-<style>
-[data-testid="stAppViewContainer"] > .main {{
-background-image: url({link_pause});
-background-size: 100% auto;
-background-position: center center;
-background-repeat: no-repeat;
-background-attachment: local;
-
-}}
-[data-testid="stHeader"] {{
-background: rgba(0,0,0,0);
-}}
-</style>
-""" 
+        play_sound(st.session_state.sel_sounds["pause_s"])
+        # page_bg_img = f"""
+        #             <style>
+        #             [data-testid="stAppViewContainer"] > .main {{
+        #             background-image: url({link_pause});
+        #             background-size: 100% auto;
+        #             background-position: center center;
+        #             background-repeat: no-repeat;
+        #             background-attachment: local;
+        #             }}
+        #             [data-testid="stHeader"] {{
+        #             background: rgba(0,0,0,0);
+        #             }}
+        #             </style>
+        #             """ 
        
-        st.markdown(page_bg_img, unsafe_allow_html=True)
+        st.markdown(set_bg(link_pause), unsafe_allow_html=True)
         
         
-        seconds = st.session_state.inputs[1] * 60
+        seconds = st.session_state.inputs[1] * 10
         for s in range(seconds, 0, -1):
             print_m = f"""
                 <div style="display: grid; place-items: center; height: center; padding-top: 7%;">
@@ -151,28 +157,26 @@ background: rgba(0,0,0,0);
     
     #finished work screen
     
-    page_bg_img = f"""
-<style>
-[data-testid="stAppViewContainer"] > .main {{
-background-image: url({link_finish});
-background-size: 100% auto;
-background-position: center center;
-background-repeat: no-repeat;
-background-attachment: local;
+#     page_bg_img = f"""
+# <style>
+# [data-testid="stAppViewContainer"] > .main {{
+# background-image: url({link_finish});
+# background-size: 100% auto;
+# background-position: center center;
+# background-repeat: no-repeat;
+# background-attachment: local;
 
-}}
-[data-testid="stHeader"] {{
-background: rgba(0,0,0,0);
-}}
-</style>
-"""
+# }}
+# [data-testid="stHeader"] {{
+# background: rgba(0,0,0,0);
+# }}
+# </style>
+# """
+    play_sound(st.session_state.sel_sounds["end_s"])
     
-    st.markdown(page_bg_img, unsafe_allow_html=True)
-    time.sleep(3)
-    st.balloons()
-    #play sound of finished working
-    #winsound.PlaySound(finish_sound, winsound.SND_FILENAME)
-    st.balloons()
+    st.markdown(set_bg(link_finish), unsafe_allow_html=True)
+    time.sleep(15)
+    
 
     st.session_state.submitted = False
     st.rerun()
