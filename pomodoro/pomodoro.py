@@ -224,7 +224,6 @@ else:
     
     st.markdown(set_bg(st.session_state.image), unsafe_allow_html=True)
     time.sleep(15)
-    
 
     st.session_state.submitted = False
     st.rerun()

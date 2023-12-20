@@ -2,8 +2,15 @@ import streamlit as st
 
 st.set_page_config(
   page_title="Pomodoro",
-  page_icon="🍅"
+  page_icon="🍅", 
+  initial_sidebar_state="collapsed"
 )
+if "submitted" not in st.session_state:
+    st.session_state.submitted = False
+#in case of switching to other pages
+st.session_state.submitted = False
+
+
 
 def button_logo(site, logo, circle):
     if circle: circle = "border-radius:50%;"
