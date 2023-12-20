@@ -47,7 +47,12 @@ if "num_cycles" not in st.session_state:
     
 if "selected_video" not in st.session_state:
     st.session_state.selected_video = ("None","")
-    
+
+if "show_animation" not in st.session_state:
+    st.session_state.show_animation = True
+if "show_timer" not in st.session_state:
+    st.session_state.show_timer = True
+
 #FUNCTIONS:
 
 def get_image_data_url(img_bytes):
@@ -77,7 +82,6 @@ list_keys = list(st.session_state.sounds.keys())
 list_dvals = list(st.session_state.sounds.values())
 "-------"
 list_vals = list(st.session_state.sel_sounds.values())
-col1, col2, col3 = st.columns(3)
 # st.session_state.color = st.color_picker("select a color", st.session_state.color)
 with col1:
   key = st.selectbox("Work sound", list_keys, key="work", index=list_dvals.index(list_vals[0]))
@@ -112,11 +116,15 @@ with col3:
             </audio>
             """
     st.markdown(html_string, unsafe_allow_html=True)
+with col1:
+  uploaded_file = st.file_uploader("Choose an for background image...", type=["png", "jpg", "jpeg", "gif"])
+  if uploaded_file is not None:
+    st.session_state.image = get_image_data_url(uploaded_file.read())
+with col2:
+  st.session_state.show_timer = st.checkbox("Show Timer", value=st.session_state.show_timer, key="timer")
 
-uploaded_file = st.file_uploader("Choose an for background image...", type=["png", "jpg", "jpeg", "gif"])
-if uploaded_file is not None:
-  st.session_state.image = get_image_data_url(uploaded_file.read())
-  
+with col3:
+  st.session_state.show_animation = st.checkbox("Show Animation", value=st.session_state.show_animation, key="animation")
 if "videos" not in st.session_state:
     st.session_state.videos = {
         "None":"",
@@ -148,7 +156,7 @@ with col1:
     else:
       st.session_state.videos[key]=text
       st.toast("Youtube link accepted!")
-  
+
 
 
 st.session_state.selected_video = (key,st.session_state.videos[key])

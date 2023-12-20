@@ -44,7 +44,10 @@ if "min_pause" not in st.session_state:
     st.session_state.min_pause = 5
 if "num_cycles" not in st.session_state:
     st.session_state.num_cycles=2   
-
+if "show_animation" not in st.session_state:
+    st.session_state.show_animation = True
+if "show_timer" not in st.session_state:
+    st.session_state.show_timer = True
 
 def generate_rectangles(angle, color, width='8px', height='16px', left='146px', top='142px'):
     return f"""<div class="rectangle" style="
@@ -60,7 +63,7 @@ def generate_rectangles(angle, color, width='8px', height='16px', left='146px', 
         transform: rotate({angle-90}deg) translate(150px) rotate(90deg);
     "></div>"""
 
-def animated_timer(color_quarters="#10040E", link_colored = "#721D45", link_normal = "#FFFFFF", image_url = "https://static.vecteezy.com/system/resources/previews/019/527/038/original/an-8-bit-retro-styled-pixel-art-illustration-of-a-red-garden-tomato-free-png.png", total_seconds = 1, current_seconds=1, num_divisions = 24, text="", show_animation = True, show_text = True, message=""):
+def animated_timer(color_quarters="#10040E", link_colored = "#721D45", link_normal = "#FFFFFF", image_url = "https://static.vecteezy.com/system/resources/previews/019/527/038/original/an-8-bit-retro-styled-pixel-art-illustration-of-a-red-garden-tomato-free-png.png", total_seconds = 1, current_seconds=1, num_divisions = 24, text="", show_animation = True, show_timer = True, message=""):
     """
     function that generates the markdown text to create an istance of the timer\n
     USAGE: input all the optional attributes that you need these are the default values\n
@@ -113,9 +116,9 @@ def animated_timer(color_quarters="#10040E", link_colored = "#721D45", link_norm
                 '''
         html_code += '</div>'
     
-    if show_text:
+    if show_timer:
         text_dim = 75 if show_animation else 100
-        transform_values = "-50%, -13%" if show_animation else "-50%, -50%"
+        transform_values = "-50%, -13%" if show_animation else "-50%, 50%"
         html_code += f"""<div style="
         position: fixed; 
         top: 13%; 
@@ -125,8 +128,7 @@ def animated_timer(color_quarters="#10040E", link_colored = "#721D45", link_norm
         font-size: {text_dim}px; 
         font-weight:bold; 
         z-index: 2;
-        text-shadow: -2px 0 rgba(0,0,0,0.09), 0 2px rgba(0,0,0,0.09), 2px 0 rgba(0,0,0,0.09), 0 -2px rgba(0,0,0,0.09);
-        pointer-events: none;">
+        text-shadow: -2px 0 rgba(0,0,0,0.09), 0 2px rgba(0,0,0,0.09), 2px 0 rgba(0,0,0,0.09), 0 -2px rgba(0,0,0,0.09);">
         {message}
         </div>"""
     
@@ -161,14 +163,13 @@ def music_player(id):
     return f"""<iframe style="display:none;" width="560" height="315" src="https://www.youtube.com/embed/{id}?autoplay=1&loop=1&playlist={id}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>"""
 
 st.markdown(music_player(st.session_state.selected_video[1]), unsafe_allow_html=True)
-
 if not st.session_state.submitted:
     # Create an empty container for the input fields
     input_container = st.empty()
     #page_bg_img = f""" <style> [data-testid="stAppViewContainer"] > .main {{ background-image: url({link_start}); background-size: cover; background-position: center center; background-repeat: no-repeat; background-attachment: local; margin-top:-0; }} [data-testid="stHeader"] {{ background: rgba(0,0,0,0); }} </style> """
     st.markdown(set_bg(link=link_start), unsafe_allow_html=True)
     
-    st.markdown(animated_timer(message=f"{timedelta(seconds=st.session_state.min_work*60)}", text="Press"), unsafe_allow_html=True)
+    st.markdown(animated_timer(message=f"{timedelta(seconds=st.session_state.min_work*60)}", text="Press", show_animation=st.session_state.show_animation, show_timer=st.session_state.show_timer), unsafe_allow_html=True)
     if input_container.button(" ", key = "start_pomodoro"):
         st.session_state.submitted = True
         input_container.empty()  # Empty the container
@@ -188,7 +189,7 @@ else:
             st.rerun()
         seconds = st.session_state.min_work * 60
         for s in range(seconds, 0, -1):
-            print_container.markdown(animated_timer(message=f"{timedelta(seconds=s)}", text="Press", total_seconds=seconds, current_seconds=seconds-s), unsafe_allow_html=True)
+            print_container.markdown(animated_timer(message=f"{timedelta(seconds=s)}", text="Press", total_seconds=seconds, current_seconds=seconds-s, show_animation=st.session_state.show_animation, show_timer=st.session_state.show_timer), unsafe_allow_html=True)
             time.sleep(1)
             print_container.empty()
             
@@ -199,7 +200,7 @@ else:
             st.markdown(set_bg(link_pause), unsafe_allow_html=True)
             seconds = st.session_state.min_pause * 60
             for s in range(seconds, 0, -1):
-                print_container.markdown(animated_timer(message=f"{timedelta(seconds=s)}", text="Press", total_seconds=seconds, current_seconds=seconds-s), unsafe_allow_html=True)
+                print_container.markdown(animated_timer(message=f"{timedelta(seconds=s)}", text="Press", total_seconds=seconds, current_seconds=seconds-s, show_animation=st.session_state.show_animation, show_timer=st.show_timer), unsafe_allow_html=True)
                 time.sleep(1)
                 print_container.empty()
         print_container.empty()
