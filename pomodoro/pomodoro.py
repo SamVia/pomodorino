@@ -200,7 +200,7 @@ else:
             st.markdown(set_bg(link_pause), unsafe_allow_html=True)
             seconds = st.session_state.min_pause * 60
             for s in range(seconds, 0, -1):
-                print_container.markdown(animated_timer(message=f"{timedelta(seconds=s)}", text="Press", total_seconds=seconds, current_seconds=seconds-s, show_animation=st.session_state.show_animation, show_timer=st.show_timer), unsafe_allow_html=True)
+                print_container.markdown(animated_timer(message=f"{timedelta(seconds=s)}", text="Press", total_seconds=seconds, current_seconds=seconds-s, show_animation=st.session_state.show_animation, show_timer=st.session_state.show_timer), unsafe_allow_html=True)
                 time.sleep(1)
                 print_container.empty()
         print_container.empty()
