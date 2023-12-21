@@ -2,7 +2,7 @@ import streamlit as st
 
 st.set_page_config(
   page_title="Pomodoro",
-  page_icon="🍅", 
+  page_icon="https://static.vecteezy.com/system/resources/previews/019/527/038/original/an-8-bit-retro-styled-pixel-art-illustration-of-a-red-garden-tomato-free-png.png", 
   initial_sidebar_state="collapsed"
 )
 if "submitted" not in st.session_state:
