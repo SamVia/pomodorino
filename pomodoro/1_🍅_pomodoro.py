@@ -110,6 +110,10 @@ def animated_timer(color_quarters="#10040E", link_colored = "#721D45", link_norm
                 transform: translate(-50%, -50%) rotate({degrees}deg); 
                 border-radius:50%;
                 z-index: 1;
+            transition: transform 0.3s ease-in-out;
+            }}
+            div.stButton > button:first-child:hover {{
+                transform: translate(-50%, -50%) scale(1.1);
             }}
             </style>
                 '''
