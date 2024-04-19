@@ -166,7 +166,7 @@ with col3:
     with columns[2]:
         st.markdown(button_logo("","https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/640px-LinkedIn_logo_initials.png",False), unsafe_allow_html=True)
     with columns[3]:
-        st.markdown(button_logo("","https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png",True), unsafe_allow_html=True)
+        st.markdown(button_logo("https://github.com/SamVia","https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png",True), unsafe_allow_html=True)
 
 
 
