@@ -1,0 +1,20 @@
+name: Create Empty Commit
+
+on:
+  schedule:
+    - cron:  '55 11 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Create empty commit
+      run: |
+        git config --global user.name 'SamVia'
+        git config --global user.email 'samuele.vianello2002@gmail.com'
+        git commit --allow-empty -m "Empty commit"
+        git push
