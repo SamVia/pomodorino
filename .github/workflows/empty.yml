@@ -2,7 +2,7 @@ name: Create Empty Commit
 
 on:
   schedule:
-    - cron:  '55 11 * * *'
+    - cron:  '12 12 * * *'
 
 jobs:
   build:
